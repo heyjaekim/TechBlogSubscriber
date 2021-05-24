@@ -5,6 +5,9 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+/**
+ * 테스트가 실패하는 경우는 사이트의 RSS 피드 주소가 변하는 경우로 예상 됨
+ */
 @DisplayName("READ_RSS_TEST")
 class RSSFeedParserTest {
     
@@ -100,6 +103,39 @@ class RSSFeedParserTest {
         for (RSSFeedMessage message : feed.getMessages()) {
             assertThat(message.getLink().trim()).startsWith("https://");
             assertThat(message.getGuid().trim()).startsWith("https://");
+        }
+        
+    }
+    
+    @Test
+    @DisplayName ("READ_RSS_라인")
+    void line () throws Exception {
+        RSSFeedParser parser = new RSSFeedParser(
+                "https://engineering.linecorp.com/ko/feed/"
+        );
+        
+        RSSFeed feed = parser.readFeed();
+        
+        for (RSSFeedMessage message : feed.getMessages()) {
+            assertThat(message.getLink().trim()).startsWith("https://");
+            assertThat(message.getGuid().trim()).startsWith("https://");
+        }
+        
+    }
+    
+    @Test
+    @DisplayName ("READ_RSS_마켓컬리")
+    void kurly () throws Exception {
+        RSSFeedParser parser = new RSSFeedParser(
+                "https://helloworld.kurly.com/feed.xml"
+        );
+        
+        RSSFeed feed = parser.readFeed();
+        
+        for (RSSFeedMessage message : feed.getMessages()) {
+            assertThat(message.getLink().trim()).startsWith("http://");
+            assertThat(message.getGuid().trim()).startsWith("http://");
+            System.out.println("message = " + message);
         }
         
     }
