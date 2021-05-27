@@ -6,18 +6,18 @@ let ajaxResponse;
  */
 $(function () {
 	$.ajax({
-		       url        : "/boards?page=0&size=20",
-		       type       : "GET",
-		       contentType: "application/x-www-form-urlencoded;charset=utf-8",
-		       dataType   : "json",
-		       success    : function (data) {
-			       ajaxResponse = data;
-			       listRendering()
-		       },
-		       error      : function () {
-			       alert("Error. 관리자에게 문의하십시오.");
-		       },
-	       });
+		url        : "/boards?page=0&size=20",
+		type       : "GET",
+		contentType: "application/x-www-form-urlencoded;charset=utf-8",
+		dataType   : "json",
+		success    : function (data) {
+			ajaxResponse = data;
+			listRendering()
+		},
+		error      : function () {
+			alert("Error. 관리자에게 문의하십시오.");
+		},
+	});
 });
 
 function selectedCompany() {
@@ -37,18 +37,18 @@ function initForm(searchFormId) {
 function requestAjax(url, param) {
 	try {
 		$.ajax({
-			       url        : url + param,
-			       type       : "GET",
-			       contentType: "application/x-www-form-urlencoded;charset=utf-8",
-			       dataType   : "json",
-			       success    : function (data) {
-				       ajaxResponse = data;
-				       listRendering()
-			       },
-			       error      : function () {
-				       alert("Error. 관리자에게 문의하십시오.");
-			       },
-		       });
+			url        : url + param,
+			type       : "GET",
+			contentType: "application/x-www-form-urlencoded;charset=utf-8",
+			dataType   : "json",
+			success    : function (data) {
+				ajaxResponse = data;
+				listRendering()
+			},
+			error      : function () {
+				alert("Error. 관리자에게 문의하십시오.");
+			},
+		});
 
 	}
 	catch (e) {
@@ -141,17 +141,17 @@ function listRendering() {
 				let regDate = new Date(regDateArray[0], regDateArray[1] - 1, regDateArray[2])
 
 				let nowDate = new Date();
-				let betweenDay = Math.round((nowDate.getTime() - regDate.getTime()) / 1000 / 60 / 60 / 24);
+				let betweenDay = Math.floor((nowDate.getTime() - regDate.getTime()) / 1000 / 60 / 60 / 24);
 
 				let eleTr = $("<tr class='graph_tr1'/>")
 					.append($("<td style='text-align:center'/>").text(this.id))
 					.append($("<td style='text-align:center'/>").append($("<img src=" + this.imgPath + " height='48px' width='96px' title='" + this.company + "'/>")))
 					.append($("<td style='text-align:center'/>").append($("<span/>").attr("class", (betweenDay == 0 ? "badge badge-danger" : ""))
-					                                                                .text((betweenDay == 0 ? "Today" : "")))
-					                                                                .css("text-align", "left")
-					                                            .append($("<a/>").attr("href", this.link)
-					                                                             .attr("target", "blank")
-					                                                             .text(" " + this.title)))
+						.text((betweenDay == 0 ? "Today" : "")))
+						.css("text-align", "left")
+						.append($("<a/>").attr("href", this.link)
+							.attr("target", "blank")
+							.text(" " + this.title)))
 					.append($("<td style='text-align:center'/>").text(this.regDate));
 
 				$("#listTbody").append(eleTr);
@@ -171,13 +171,13 @@ function renderingPagingArea() {
 
 		if (ajaxResponse.first != true) {
 			let prePagebutton = $("<li/>").attr("class", "page-item")
-			                              .append(
-				                              $("<a/>").attr("class", "page-link")
-				                                       .attr("href", "javascript:pageMove('"
-				                                                     + (ajaxResponse.pageable.pageNumber - 1)
-				                                                     + "', " + ajaxResponse.size + ");")
-				                                       .text("<")
-			                              );
+				.append(
+					$("<a/>").attr("class", "page-link")
+						.attr("href", "javascript:pageMove('"
+							+ (ajaxResponse.pageable.pageNumber - 1)
+							+ "', " + ajaxResponse.size + ");")
+						.text("<")
+				);
 			$("#pagingArea").append(prePagebutton);
 		}
 
@@ -198,10 +198,10 @@ function renderingPagingArea() {
 
 			$(pageNumButton).append(
 				$("<a/>").attr("class", "page-link")
-				         .attr("href", "javascript:pageMove('"
-				                       + i
-				                       + "', " + ajaxResponse.size + ");")
-				         .text(i + 1)
+					.attr("href", "javascript:pageMove('"
+						+ i
+						+ "', " + ajaxResponse.size + ");")
+					.text(i + 1)
 			);
 
 			$("#pagingArea").append(pageNumButton);
@@ -211,13 +211,13 @@ function renderingPagingArea() {
 		if (ajaxResponse.last != true) {
 
 			let nextPagebutton = $("<li/>").attr("class", "page-item")
-			                               .append(
-				                               $("<a/>").attr("class", "page-link")
-				                                        .attr("href", "javascript:pageMove('"
-				                                                      + (ajaxResponse.pageable.pageNumber + 1)
-				                                                      + "', " + ajaxResponse.size + ");")
-				                                        .text(">")
-			                               );
+				.append(
+					$("<a/>").attr("class", "page-link")
+						.attr("href", "javascript:pageMove('"
+							+ (ajaxResponse.pageable.pageNumber + 1)
+							+ "', " + ajaxResponse.size + ");")
+						.text(">")
+				);
 
 			$("#pagingArea").append(nextPagebutton);
 		}
