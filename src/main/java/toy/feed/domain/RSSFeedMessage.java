@@ -1,9 +1,12 @@
-package toy.feed.object;
+package toy.feed.domain;
 
 import lombok.*;
 
-@ToString
-@Getter @Setter
+@Data
+@NoArgsConstructor
+@RequiredArgsConstructor
+@AllArgsConstructor
+@Builder
 public class RSSFeedMessage {
     
     private String title;
@@ -12,8 +15,8 @@ public class RSSFeedMessage {
     private String link;
     private String author;
     private String guid;
-    private String pubdate;
-    
+    private String pubDate;
+
 }
 
 

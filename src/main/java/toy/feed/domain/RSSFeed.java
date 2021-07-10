@@ -1,20 +1,21 @@
-package toy.feed.object;
+package toy.feed.domain;
 
 import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@ToString
-@Getter @Setter
+@Data
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
 public class RSSFeed {
     
-    private final String title;
-    private final String link;
-    private final String language;
-    private final String copyright;
-    private final String pubDate;
-    private final List<RSSFeedMessage> messages = new ArrayList<>();
+    private String title;
+    private String link;
+    private String language;
+    private String copyright;
+    private String pubDate;
+    private List<RSSFeedMessage> messages = new ArrayList<>();
     
     public RSSFeed (String title, String link,
                     String language, String copyright, String pubDate) {
@@ -24,6 +25,6 @@ public class RSSFeed {
         this.copyright = copyright;
         this.pubDate = pubDate;
     }
-    
+
 }
 

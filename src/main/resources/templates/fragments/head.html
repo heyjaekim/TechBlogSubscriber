@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org" >
 <head th:fragment="head" >
-    <title >Subscribe Tech Blogs</title >
+    <title >IT 기술 블로그</title >
     <link rel="shortcut icon" href="/images/favicon.ico" >
     <!-- Required meta tags -->
     <meta charset="utf-8" >
@@ -13,11 +13,49 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" ></script >
     <!-- Custom styles for this template -->
     <style >
+
+        .footer-pop {
+            font-size: 0;
+            text-decoration: none;
+        }
+
         body {
             animation: fadein 2000ms ease-out;
             -moz-animation: fadein 2000ms ease-out; /* Firefox */
             -webkit-animation: fadein 2000ms ease-out; /* Safari and  Chrome */
             -o-animation: fadein 2000ms ease-out; /* Opera */
+        }
+
+        .header-decorate > div {
+            text-align: center;
+            text-decoration: none;
+            color: black;
+        }
+
+        .header-decorate > a:hover title {
+            text-align: center;
+            text-decoration: none;
+            color: blue;
+        }
+
+        .title {
+            font-weight: bold;
+            font-size: 35px;
+            transition: all 2s;
+        }
+
+        .title:hover {
+            font-weight: bold;
+            font-size: 50px;
+            transition: all 2s;
+        }
+
+        .title > a {
+            text-decoration: none;
+        }
+
+        .subtitle {
+            font-size: 20px;
         }
 
         @keyframes fadein {
@@ -69,7 +107,8 @@
         #totalResultCount {
             cursor: default;
         }
-        #selectCompany{
+
+        #selectCompany {
             width: ;
         }
 

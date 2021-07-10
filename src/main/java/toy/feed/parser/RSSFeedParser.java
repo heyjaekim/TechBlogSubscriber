@@ -1,4 +1,7 @@
-package toy.feed.object;
+package toy.feed.parser;
+
+import toy.feed.domain.RSSFeed;
+import toy.feed.domain.RSSFeedMessage;
 
 import javax.xml.stream.XMLEventReader;
 import javax.xml.stream.XMLInputFactory;
@@ -42,7 +45,7 @@ public class RSSFeedParser {
             String language = "";
             String copyright = "";
             String author = "";
-            String pubdate = "";
+            String pubDate = "";
             String guid = "";
             
             XMLInputFactory inputFactory = XMLInputFactory.newInstance();
@@ -57,7 +60,7 @@ public class RSSFeedParser {
                         case ITEM:
                             if (isFeedHeader) {
                                 isFeedHeader = false;
-                                feed = new RSSFeed(title, link, language, copyright, pubdate);
+                                feed = new RSSFeed(title, link, language, copyright, pubDate);
                             }
                             event = eventReader.nextEvent();
                             break;
@@ -77,7 +80,7 @@ public class RSSFeedParser {
                             author = getCharacterData(event, eventReader);
                             break;
                         case PUBDATE:
-                            pubdate = getCharacterData(event, eventReader);
+                            pubDate = getCharacterData(event, eventReader);
                             break;
                         case COPYRIGHT:
                             copyright = getCharacterData(event, eventReader);
@@ -86,15 +89,18 @@ public class RSSFeedParser {
                 }
                 else if (event.isEndElement()) {
                     if (event.asEndElement().getName().getLocalPart() == ITEM) {
-                            RSSFeedMessage message = new RSSFeedMessage();
-                            message.setAuthor(author);
-                            message.setGuid(guid);
-                            message.setLink(link);
-                            message.setTitle(title);
-                            message.setPubdate(pubdate);
-                            feed.getMessages().add(message);
-                            event = eventReader.nextEvent();
-                            continue;
+                        RSSFeedMessage message = RSSFeedMessage.builder()
+                                                    .author(author)
+                                                    .guid(guid)
+                                                    .link(link)
+                                                    .title(title)
+                                                    .pubDate(pubDate)
+                                                    .build();
+
+                        feed.getMessages().add(message);
+
+                        event = eventReader.nextEvent();
+                        continue;
                     }
                 }
             }
@@ -118,9 +124,11 @@ public class RSSFeedParser {
     throws XMLStreamException {
         String result = "";
         event = eventReader.nextEvent();
+
         if (event instanceof Characters) {
             result = event.asCharacters().getData();
         }
+
         return result;
     }
     

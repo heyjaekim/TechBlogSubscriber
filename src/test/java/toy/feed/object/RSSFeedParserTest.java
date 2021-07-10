@@ -2,6 +2,9 @@ package toy.feed.object;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import toy.feed.domain.RSSFeed;
+import toy.feed.domain.RSSFeedMessage;
+import toy.feed.parser.RSSFeedParser;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

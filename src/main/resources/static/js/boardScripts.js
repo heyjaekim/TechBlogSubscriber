@@ -1,3 +1,5 @@
+"use strict";
+
 const CONTEXT_PATH = "";
 let ajaxResponse;
 
@@ -17,20 +19,6 @@ $(function () {
 	       });
 });
 
-function selectedCompany() {
-	let selected = $('#selectCompany').val();
-	$('#company').val(selected);
-}
-
-function resetSearchForm(searchFormId) {
-	try {
-		$("#" + searchFormId)[0].reset();
-	}
-	catch (e) {
-		alert("[ resetSearchForm() ] :: " + e.message);
-	}
-}
-
 function requestAjax(url, param) {
 	try {
 		$.ajax({
@@ -49,8 +37,13 @@ function requestAjax(url, param) {
 
 	}
 	catch (e) {
-		alert("[ requestAjax ] :: " + e.message);
+		alert("[requestAjax] :: " + e.message);
 	}
+}
+
+function selectedCompany() {
+	$('#company').val($('#selectCompany').val());
+	searchPost();
 }
 
 /**
@@ -61,10 +54,12 @@ function requestAjax(url, param) {
 function pageMove(selectedPageNum, size) {
 	try {
 		searchResultList(selectedPageNum, size);
-
+		window.scrollTo({
+			                top: 0, left: 0, behavior: 'smooth'
+		                });
 	}
 	catch (e) {
-		alert("[ pageMove(renderingCount, selectedPageNum) ] :: " + e.message);
+		alert("[pageMove] :: " + e.message);
 	}
 }
 
@@ -87,7 +82,7 @@ function searchResultList(selectedPageNum, size) {
 
 	}
 	catch (e) {
-		alert("[ searchResultList() ] :: " + e.message);
+		alert("[searchResultList] :: " + e.message);
 	}
 }
 
@@ -109,7 +104,7 @@ function searchPost() {
 		requestAjax(url, param);
 	}
 	catch (e) {
-		alert("[ searchResultList() ] " + e.message);
+		alert("[searchResultList] " + e.message);
 	}
 }
 
@@ -144,9 +139,9 @@ function listRendering() {
 					.append($("<td style='text-align:center'/>").append($("<img src=" + this.imgPath + " height='48px' width='96px' title='" + this.company + "'/>")))
 					.append($("<td style='text-align:center'/>").append($("<span/>").attr("class", (betweenDay == 0 ? "badge badge-danger" : ""))
 					                                                                .text((betweenDay == 0 ? "Today" : "")))
-					                                                                .css("text-align", "left")
-					                                                                .css("font-weight", "bold")
-					                                                                .css("color", "skyblue")
+					                                            .css("text-align", "left")
+					                                            .css("font-weight", "bold")
+					                                            .css("color", "skyblue")
 					                                            .append($("<a/>").attr("href", this.link)
 					                                                             .attr("target", "blank")
 					                                                             .text(" " + this.title)))
@@ -155,11 +150,11 @@ function listRendering() {
 				$("#listTbody").append(eleTr);
 			});
 		}
-		$("#totalResultCount").empty().append("Posts  : " + ajaxResponse.totalElements);
+		$("#totalResultCount").empty().append("TOTAL  : " + ajaxResponse.totalElements);
 		renderingPagingArea();
 	}
 	catch (e) {
-		alert("[ listRendering() ] " + e.message);
+		alert("[listRendering] " + e.message);
 	}
 }
 
@@ -219,7 +214,7 @@ function renderingPagingArea() {
 	}
 	catch
 		(e) {
-		alert("[ renderingPagingArea() ] :: " + e.message);
+		alert("[renderingPagingArea] :: " + e.message);
 	}
 }
 
