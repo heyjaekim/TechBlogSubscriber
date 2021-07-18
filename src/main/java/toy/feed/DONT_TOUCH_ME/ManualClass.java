@@ -28,7 +28,7 @@ public class ManualClass {
     private final FeedBoardRepository feedBoardRepository;
 
     @Transactional
-    public void manualWoowabros() throws Exception {
+    public void menualWoowabros() throws Exception {
         List<FeedBoard> list = new ArrayList<>();
 
         File file = new File("src/test/resources/woowa_tech.xlsx");
@@ -49,7 +49,7 @@ public class ManualClass {
     }
 
     @Transactional
-    public void manualToss() throws Exception {
+    public void menualToss() throws Exception {
         List<FeedBoard> list = new ArrayList<>();
 
         File file = new File("src/test/resources/toss_tech.xlsx");

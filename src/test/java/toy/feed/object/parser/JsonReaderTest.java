@@ -1,48 +1,67 @@
-package toy.feed.parser;
+package toy.feed.object.parser;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.springframework.util.ResourceUtils;
 import toy.feed.factory.appendices.Company;
 
 import java.io.File;
 import java.io.FileReader;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class JsonReader {
+import static org.assertj.core.api.Assertions.assertThat;
 
-    public static List<String> readUrls() throws Exception {
+public class JsonReaderTest {
+    
+    @Test
+    @DisplayName("JSON_List<String>_읽기")
+    public void readStringList() throws Exception {
+        //given
         File file = ResourceUtils.getFile("classpath:properties/propertiesFactory.json");
         FileReader reader = new FileReader(file);
         JSONParser parser = new JSONParser();
+        
+        //when
         JSONObject jsonObj = (JSONObject) parser.parse(reader);
-
-        return (ArrayList<String>) jsonObj.get("urls");
+        List<String> urls = (ArrayList<String>) jsonObj.get("urls");
+        
+        //then
+        urls.forEach(it->assertThat(it).isNotBlank()
+                                       .contains("feed")
+                                       .startsWith("http"));
     }
 
-    public static List<Company> readCompanies() throws Exception {
+    @Test
+    @DisplayName("JSON_List<Object>_읽기")
+    public void readObjectList() throws Exception {
+        //given
         File file = ResourceUtils.getFile("classpath:properties/propertiesFactory.json");
         FileReader reader = new FileReader(file);
         JSONParser parser = new JSONParser();
 
-        List<Company> companies = new ArrayList<>();
-
+        //when
         JSONObject jsonObj = (JSONObject) parser.parse(reader);
+        List<String> urls = (ArrayList<String>) jsonObj.get("urls");
         JSONArray jsonCompanies = (JSONArray) jsonObj.get("companies");
+
+        //then
+        //RSS피드 주소의 개수와 RSS피드를 검증하는 Company객체의 개수는 같아야만 한다.
+        assertThat(jsonCompanies.size()).isEqualTo(urls.size());
 
         for(int i = 0; i < jsonCompanies.size(); i++) {
             JSONObject o = (JSONObject) jsonCompanies.get(i);
             String key = (String) o.get("key");
             String name = (String) o.get("name");
             String imgPath = (String) o.get("imgPath");
-            companies.add(new Company(key, name, imgPath));
+
+            assertThat(key).isNotEmpty();
+            assertThat(name).isNotEmpty();
+            assertThat(imgPath).isNotEmpty();
         }
-
-        return companies;
     }
-
+    
 }

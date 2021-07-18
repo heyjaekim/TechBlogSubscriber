@@ -1,21 +1,22 @@
 package toy.feed.config;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import toy.feed.properties.DatabaseProperties;
 
 import javax.sql.DataSource;
 
 @Configuration
+@RequiredArgsConstructor
 @EnableTransactionManagement
 public class DatabaseConfig {
-    
-    @Autowired
-    private DatabaseProperties databaseProperties;
-    
+
+    private final DatabaseProperties databaseProperties;
+
     @Bean
     @Primary
     public DataSource customDataSource () {
@@ -26,5 +27,5 @@ public class DatabaseConfig {
                 .password(databaseProperties.getPassword())
                 .build();
     }
-    
+
 }

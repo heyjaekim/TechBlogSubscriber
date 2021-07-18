@@ -11,6 +11,8 @@ import toy.feed.repository.FeedBoardRepository;
 
 import java.util.List;
 
+import static toy.feed.parser.JsonReader.readCompanies;
+
 @Slf4j
 @Component
 @RequiredArgsConstructor
@@ -18,19 +20,20 @@ public class FeedBoardFactory {
 
     private final FeedBoardRepository feedBoardRepository;
 
-    public FeedBoard findFeedBoardForm(RSSFeedMessage message) {
+    public FeedBoard findFeedBoardFrom(RSSFeedMessage message) {
         if(isNoDuplicate(message)) {
             String url = message.getLink();
             try {
-                List<Company> companies = JsonReader.readCompanies();
-                for(Company company : companies) {
-                    if(url.contains(company.getKey())) {
-                        message.setCompany(company.getName());
-                        message.setImgPath(company.getImgPath());
+                List<Company> companies = readCompanies();
+                for(int i = 0; i < companies.size(); i++) {
+                    if(url.contains(companies.get(i).getKey())) {
+                        message.setCompany(companies.get(i).getName());
+                        message.setImgPath(companies.get(i).getImgPath());
                         break;
                     }
                 }
-            } catch (Exception e) {
+            }
+            catch(Exception e) {
                 log.error("[Exception : JsonReader] {}", e.getMessage());
                 return null;
             }
@@ -42,11 +45,11 @@ public class FeedBoardFactory {
                     .guid(message.getGuid())
                     .build();
         }
-        //else
         return null;
     }
 
     private boolean isNoDuplicate(RSSFeedMessage message) {
         return feedBoardRepository.countByGuid(message.getGuid().trim()) == 0L;
     }
+
 }

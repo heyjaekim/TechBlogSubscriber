@@ -1,4 +1,4 @@
-package toy.feed.object;
+package toy.feed.object.domain;
 
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -8,6 +8,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import toy.feed.domain.entity.FeedBoard;
 import toy.feed.repository.FeedBoardRepository;
 
 import java.io.File;
@@ -23,7 +24,7 @@ public class ExcelReadTest {
     @Autowired FeedBoardRepository feedBoardRepository;
     
     @Test
-    @DisplayName ("기술블로그_엑셀읽기_우아한형제들")
+    @DisplayName("우아한형제들_엑셀_읽기")
     public void read () throws Exception {
         // given
         List<FeedBoard> list = new ArrayList<>();

@@ -11,12 +11,12 @@ import org.springframework.context.annotation.PropertySource;
 @PropertySource(value = "file:${user.home}/Desktop/side-project/env/db.properties")
 public class DatabaseProperties {
 
-    @Value("{spring.datasource.url}")
+    @Value("${spring.datasource.url}")
     private String url;
 
-    @Value("{spring.datasource.username}")
+    @Value("${spring.datasource.username}")
     private String username;
 
-    @Value("{spring.datasource.password}")
+    @Value("${spring.datasource.password}")
     private String password;
 }

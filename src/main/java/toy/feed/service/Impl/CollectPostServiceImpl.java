@@ -15,20 +15,21 @@ import java.util.Objects;
 
 import static toy.feed.parser.JsonReader.readUrls;
 
+
 @Slf4j
 @Service
 @RequiredArgsConstructor
 public class CollectPostServiceImpl implements CollectPostService {
 
-    private final FeedBoardRepository feedBoardRepository;
     private final FeedBoardFactory feedBoardFactory;
+    private final FeedBoardRepository feedBoardRepository;
 
-    @Transactional(readOnly = true)
-    public void getAllGroupFeed () throws Exception {
+    @Transactional
+    public void getAllGroupFeed() throws Exception {
         loopCrawl();
     }
 
-    private void loopCrawl () throws Exception{
+    private void loopCrawl() throws Exception {
 
         List<String> urls = readUrls();
 
@@ -38,12 +39,13 @@ public class CollectPostServiceImpl implements CollectPostService {
 
             feed.getMessages()
                     .stream()
-                    .map(feedBoardFactory::findFeedBoardForm)
+                    .map(feedBoardFactory::findFeedBoardFrom)
                     .filter(Objects::nonNull)
-                    .forEach(feedBoard -> {
-                        log.info("[Logging <SAVE> {} : {}", feedBoard.getCompany(), feedBoard.getTitle());
+                    .forEach(feedBoard->{
+                        log.info("[LOGGING] <SAVE> {} : {}", feedBoard.getCompany(), feedBoard.getTitle());
                         feedBoardRepository.save(feedBoard);
                     });
         }
     }
+
 }

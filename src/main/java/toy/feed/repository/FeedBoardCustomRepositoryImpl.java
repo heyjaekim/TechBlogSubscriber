@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 import static toy.feed.domain.dto.FeedBoardDto.convertToFeedBoardDtoFrom;
 import static toy.feed.domain.entity.QFeedBoard.feedBoard;
 
-public class FeedBoardCustomRepositoryImpl extends QuerydslRepositorySupport implements FeedBoardCustomRepository{
+public class FeedBoardCustomRepositoryImpl extends QuerydslRepositorySupport implements FeedBoardCustomRepository {
 
     public FeedBoardCustomRepositoryImpl () {
         super(FeedBoard.class);
@@ -31,15 +31,17 @@ public class FeedBoardCustomRepositoryImpl extends QuerydslRepositorySupport imp
                 .select(feedBoard)
                 .from(feedBoard)
                 .where(feedBoard.company.contains(company))
+                .where(feedBoard.title.contains(title))
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
                 .orderBy(feedBoard.id.desc())
                 .fetchResults();
 
         List<FeedBoardDto> content = results.getResults().stream()
-                                            .map(feedBoard -> convertToFeedBoardDtoFrom(feedBoard))
-                                            .collect(Collectors.toList());
+                .map(feedBoard->convertToFeedBoardDtoFrom(feedBoard))
+                .collect(Collectors.toList());
 
         return new PageImpl<>(content, pageable, results.getTotal());
     }
+
 }
