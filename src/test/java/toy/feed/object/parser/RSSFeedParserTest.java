@@ -2,10 +2,7 @@ package toy.feed.object.parser;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import toy.feed.domain.RSSFeed;
-import toy.feed.parser.RSSFeedParser;
-
-import static org.assertj.core.api.Assertions.assertThat;
+import toy.subscribe.domain.RSSFeed;
 
 /**
  * 테스트가 실패하는 경우는 사이트의 RSS 피드 주소가 변하는 경우로 예상 됨

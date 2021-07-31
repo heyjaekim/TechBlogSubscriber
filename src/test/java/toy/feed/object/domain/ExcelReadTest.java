@@ -8,8 +8,8 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import toy.feed.domain.entity.FeedBoard;
-import toy.feed.repository.FeedBoardRepository;
+import toy.subscribe.domain.entity.FeedBoard;
+import toy.subscribe.repository.FeedBoardRepository;
 
 import java.io.File;
 import java.io.FileInputStream;

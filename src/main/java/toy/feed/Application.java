@@ -12,11 +12,11 @@ import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
 @EnableJpaAuditing
 @SpringBootApplication
 public class Application {
-    
+
     public static void main ( String[] args ) throws Exception {
         SpringApplication.run(Application.class, args);
     }
-    
+
     @Bean
     public TaskScheduler scheduler () {
         ThreadPoolTaskScheduler scheduler = new ThreadPoolTaskScheduler();

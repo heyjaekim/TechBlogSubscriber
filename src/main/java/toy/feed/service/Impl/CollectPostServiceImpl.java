@@ -15,7 +15,6 @@ import java.util.Objects;
 
 import static toy.feed.parser.JsonReader.readUrls;
 
-
 @Slf4j
 @Service
 @RequiredArgsConstructor
@@ -30,7 +29,6 @@ public class CollectPostServiceImpl implements CollectPostService {
     }
 
     private void loopCrawl() throws Exception {
-
         List<String> urls = readUrls();
 
         for(String url : urls) {

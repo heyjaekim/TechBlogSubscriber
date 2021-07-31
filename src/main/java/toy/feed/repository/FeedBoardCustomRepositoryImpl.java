@@ -45,3 +45,4 @@ public class FeedBoardCustomRepositoryImpl extends QuerydslRepositorySupport imp
     }
 
 }
+

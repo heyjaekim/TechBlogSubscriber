@@ -5,35 +5,35 @@ let ajaxResponse;
 
 $(function () {
 	$.ajax({
-		       url        : "/boards?page=0&size=30",
-		       type       : "GET",
-		       contentType: "application/x-www-form-urlencoded;charset=utf-8",
-		       dataType   : "json",
-		       success    : function (data) {
-			       ajaxResponse = data;
-			       listRendering()
-		       },
-		       error      : function () {
-			       alert("Error. 관리자에게 문의하십시오.");
-		       },
-	       });
+		url        : "/boards?page=0&size=30",
+		type       : "GET",
+		contentType: "application/x-www-form-urlencoded;charset=utf-8",
+		dataType   : "json",
+		success    : function (data) {
+			ajaxResponse = data;
+			listRendering()
+		},
+		error      : function () {
+			alert("Error. 관리자에게 문의하십시오.");
+		},
+	});
 });
 
 function requestAjax(url, param) {
 	try {
 		$.ajax({
-			       url        : url + param,
-			       type       : "GET",
-			       contentType: "application/x-www-form-urlencoded;charset=utf-8",
-			       dataType   : "json",
-			       success    : function (data) {
-				       ajaxResponse = data;
-				       listRendering()
-			       },
-			       error      : function () {
-				       alert("Error. 관리자에게 문의하십시오.");
-			       },
-		       });
+			url        : url + param,
+			type       : "GET",
+			contentType: "application/x-www-form-urlencoded;charset=utf-8",
+			dataType   : "json",
+			success    : function (data) {
+				ajaxResponse = data;
+				listRendering()
+			},
+			error      : function () {
+				alert("Error. 관리자에게 문의하십시오.");
+			},
+		});
 
 	}
 	catch (e) {
@@ -41,6 +41,9 @@ function requestAjax(url, param) {
 	}
 }
 
+/**
+ * 셀렉트 박스 회사 선택시 검색
+ */
 function selectedCompany() {
 	$('#company').val($('#selectCompany').val());
 	searchPost();
@@ -55,8 +58,8 @@ function pageMove(selectedPageNum, size) {
 	try {
 		searchResultList(selectedPageNum, size);
 		window.scrollTo({
-			                top: 0, left: 0, behavior: 'smooth'
-		                });
+			top: 0, left: 0, behavior: 'smooth'
+		});
 	}
 	catch (e) {
 		alert("[pageMove] :: " + e.message);
@@ -138,13 +141,13 @@ function listRendering() {
 				let eleTr = $("<tr class='graph_tr1'/>")
 					.append($("<td style='text-align:center'/>").append($("<img src=" + this.imgPath + " height='48px' width='96px' title='" + this.company + "'/>")))
 					.append($("<td style='text-align:center'/>").append($("<span/>").attr("class", (betweenDay == 0 ? "badge badge-danger" : ""))
-					                                                                .text((betweenDay == 0 ? "Today" : "")))
-					                                            .css("text-align", "left")
-					                                            .css("font-weight", "bold")
-					                                            .css("color", "skyblue")
-					                                            .append($("<a/>").attr("href", this.link)
-					                                                             .attr("target", "blank")
-					                                                             .text(" " + this.title)))
+						.text((betweenDay == 0 ? "Today" : "")))
+						.css("text-align", "left")
+						.css("font-weight", "bold")
+						.css("color", "skyblue")
+						.append($("<a/>").attr("href", this.link)
+							.attr("target", "blank")
+							.text(" " + this.title)))
 					.append($("<td style='text-align:center'/>").text(this.regDate));
 
 				$("#listTbody").append(eleTr);
@@ -164,13 +167,13 @@ function renderingPagingArea() {
 
 		if (ajaxResponse.first != true) {
 			let prePagebutton = $("<li/>").attr("class", "page-item")
-			                              .append(
-				                              $("<a/>").attr("class", "page-link")
-				                                       .attr("href", "javascript:pageMove('"
-				                                                     + (ajaxResponse.pageable.pageNumber - 1)
-				                                                     + "', " + ajaxResponse.size + ");")
-				                                       .text("<")
-			                              );
+				.append(
+					$("<a/>").attr("class", "page-link")
+						.attr("href", "javascript:pageMove('"
+							+ (ajaxResponse.pageable.pageNumber - 1)
+							+ "', " + ajaxResponse.size + ");")
+						.text("<")
+				);
 			$("#pagingArea").append(prePagebutton);
 		}
 
@@ -189,10 +192,10 @@ function renderingPagingArea() {
 
 			$(pageNumButton).append(
 				$("<a/>").attr("class", "page-link")
-				         .attr("href", "javascript:pageMove('"
-				                       + i
-				                       + "', " + ajaxResponse.size + ");")
-				         .text(i + 1)
+					.attr("href", "javascript:pageMove('"
+						+ i
+						+ "', " + ajaxResponse.size + ");")
+					.text(i + 1)
 			);
 
 			$("#pagingArea").append(pageNumButton);
@@ -201,13 +204,13 @@ function renderingPagingArea() {
 		if (ajaxResponse.last != true) {
 
 			let nextPagebutton = $("<li/>").attr("class", "page-item")
-			                               .append(
-				                               $("<a/>").attr("class", "page-link")
-				                                        .attr("href", "javascript:pageMove('"
-				                                                      + (ajaxResponse.pageable.pageNumber + 1)
-				                                                      + "', " + ajaxResponse.size + ");")
-				                                        .text(">")
-			                               );
+				.append(
+					$("<a/>").attr("class", "page-link")
+						.attr("href", "javascript:pageMove('"
+							+ (ajaxResponse.pageable.pageNumber + 1)
+							+ "', " + ajaxResponse.size + ");")
+						.text(">")
+				);
 
 			$("#pagingArea").append(nextPagebutton);
 		}
